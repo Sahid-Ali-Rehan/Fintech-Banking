@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.P. Morgan Chase & Co. Core Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
+        .serif-title { font-family: 'Cinzel', serif; letter-spacing: 0.07em; }
+        .sans-ui { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#111827] sans-ui text-slate-200 min-h-screen flex flex-col items-center justify-center p-6">
+
+    <div class="w-full max-w-xl bg-[#1f2937] border border-slate-700 shadow-2xl p-8 space-y-8">
+        
+        <!-- Corporate Identity Header -->
+        <div class="text-center border-b border-slate-700 pb-6">
+            <h1 class="serif-title text-2xl font-semibold text-amber-100 tracking-wider uppercase">J.P. Morgan Chase & Co.</h1>
+            <p class="text-xs tracking-widest text-slate-400 font-light mt-1 uppercase">Institutional Client Banking Portal</p>
+        </div>
+
+        <!-- Authentication Module Interface -->
+        <div id="auth-section" class="space-y-6">
+            <div class="flex bg-[#111827] p-1 border border-slate-700">
+                <button onclick="switchAuthTab('login')" id="tab-login" class="w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase bg-[#1f2937] text-amber-100 border border-slate-700">Access Terminal</button>
+                <button onclick="switchAuthTab('register')" id="tab-register" class="w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-slate-200">Establish Registry</button>
+            </div>
+
+            <!-- Login Container Form -->
+            <div id="form-login" class="space-y-4">
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Account Identifier</label>
+                    <input id="login-acc" type="text" placeholder="10-Digit Routing Assignment" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Security Access PIN</label>
+                    <input id="login-pin" type="password" placeholder="4-Digit Secure Configuration" maxlength="4" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+                </div>
+                <button onclick="login()" class="w-full bg-slate-100 text-slate-900 py-3 text-xs font-bold uppercase tracking-widest hover:bg-slate-200 transition">Authorize Session</button>
+            </div>
+
+            <!-- Register Container Form -->
+            <div id="form-register" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Legal Entity / Full Corporate Name</label>
+                    <input id="reg-name" type="text" placeholder="Client Assignment Signature" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500">
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Define Access PIN</label>
+                    <input id="reg-pin" type="password" placeholder="Construct 4-Digit Identity Token" maxlength="4" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+                </div>
+                <button onclick="register()" class="w-full bg-slate-100 text-slate-900 py-3 text-xs font-bold uppercase tracking-widest hover:bg-slate-200 transition">Generate Ledger Allocation</button>
+            </div>
+            <div id="auth-message" class="text-center text-xs tracking-wide"></div>
+        </div>
+
+        <!-- Authorized Client Terminal Dashboard -->
+        <div id="dashboard-section" class="space-y-8 hidden">
+            <div class="flex justify-between items-center bg-[#111827] border border-slate-700 p-4">
+                <div>
+                    <h3 id="user-name" class="text-xs font-bold tracking-wider text-amber-100 uppercase">Client</h3>
+                    <p id="user-acc" class="text-[10px] font-mono tracking-widest text-slate-400 uppercase mt-0.5">Acc: 0000000000</p>
+                </div>
+                <button onclick="logout()" class="text-[10px] font-bold tracking-wider uppercase border border-slate-700 text-slate-400 px-3 py-1.5 hover:text-slate-200 hover:border-slate-500 transition">Terminate Session</button>
+            </div>
+
+            <!-- Liquidity Ledger Positions -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-[#111827] border border-slate-700 p-5">
+                    <span class="text-[10px] text-slate-400 tracking-widest font-semibold uppercase block border-b border-slate-800 pb-2">Available Liquid Funds</span>
+                    <h2 id="bal-liquid" class="text-2xl font-semibold font-mono text-slate-100 mt-3">$0.00</h2>
+                </div>
+                <div class="bg-[#111827] border border-slate-700 p-5">
+                    <span class="text-[10px] text-slate-400 tracking-widest font-semibold uppercase block border-b border-slate-800 pb-2">Fixed Term Fixed Yield</span>
+                    <h2 id="bal-bonds" class="text-2xl font-semibold font-mono text-amber-100 mt-3">$0.00</h2>
+                    <p id="bond-term" class="text-[9px] text-slate-400 tracking-wider mt-2 hidden uppercase font-mono"></p>
+                </div>
+            </div>
+
+            <!-- Transaction and Resource Matrix -->
+            <div class="space-y-4 border-t border-slate-700 pt-6">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Capital Ledger Actions</h4>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="col-span-2 relative">
+                        <input id="dash-amount" type="number" placeholder="Value Denomination (USD)" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+                    </div>
+                    <button onclick="executeTx('deposit')" class="bg-slate-200 text-slate-900 text-xs font-bold uppercase tracking-wider hover:bg-slate-300 transition">Credit Ledger</button>
+                    
+                    <div class="col-span-2">
+                        <select id="bond-years" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-300 focus:outline-none focus:border-slate-500 uppercase text-xs tracking-wider font-medium">
+                            <option value="1">12-Month Structural Horizon</option>
+                            <option value="3">36-Month Structural Horizon</option>
+                            <option value="5">60-Month Structural Horizon</option>
+                        </select>
+                    </div>
+                    <button onclick="executeTx('withdraw')" class="border border-slate-700 text-slate-300 text-xs font-bold uppercase tracking-wider hover:text-slate-100 hover:border-slate-500 transition">Debit Ledger</button>
+                    
+                    <div class="col-span-2"></div>
+                    <button onclick="executeTx('invest')" class="bg-amber-950 text-amber-200 border border-amber-800 text-xs font-bold uppercase tracking-wider hover:bg-amber-900 transition py-3">Lock Asset Structural</button>
+                </div>
+            </div>
+
+            <!-- Time Progression Simulation Block -->
+            <div class="bg-[#111827] border border-slate-700 p-5 space-y-3">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Yield Engine Time Projection Simulator</h4>
+                <div class="flex gap-3">
+                    <input id="time-years" type="number" value="1" min="1" class="w-1/2 bg-[#1f2937] border border-slate-700 p-3 text-sm text-slate-100 font-mono focus:outline-none">
+                    <button onclick="runTimeMachine()" class="w-1/2 bg-slate-800 text-slate-200 text-xs font-bold uppercase tracking-widest border border-slate-600 hover:bg-slate-700 transition">Execute Forward Projection</button>
+                </div>
+            </div>
+
+            <!-- Terminal Output System Log -->
+            <div id="log-box" class="hidden p-4 bg-[#111827] border border-slate-800 text-xs font-mono rounded"></div>
+        </div>
+    </div>
+
+    <!-- Frontend Architecture Logic Systems -->
+    <script>
+        let currentAuthTab = 'login';
+        
+        function switchAuthTab(tab) {
+            currentAuthTab = tab;
+            document.getElementById('form-login').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('form-register').classList.toggle('hidden', tab !== 'register');
+            
+            const activeClass = 'w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase bg-[#1f2937] text-amber-100 border border-slate-700';
+            const inactiveClass = 'w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-slate-200';
+            
+            document.getElementById('tab-login').className = tab === 'login' ? activeClass : inactiveClass;
+            document.getElementById('tab-register').className = tab === 'register' ? activeClass : inactiveClass;
+            document.getElementById('auth-message').innerText = '';
+        }
+
+        async function apiCall(url, body) {
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                return await res.json();
+            } catch (error) {
+                console.error("Transmission breakdown:", error);
+                return { success: false, error: "System framework communication infrastructure fault." };
+            }
+        }
+
+        async function register() {
+            const name = document.getElementById('reg-name').value;
+            const pin = document.getElementById('reg-pin').value;
+            const msg = document.getElementById('auth-message');
+            const data = await apiCall('/api/register', { name, pin });
+            
+            if(data.success) {
+                msg.className = "text-center text-xs font-medium text-emerald-400 mt-2";
+                msg.innerHTML = `Ledger allocated. Registry Assignment ID:<br><strong class="text-base text-slate-100 font-mono tracking-widest block my-1">${data.account_number}</strong>Migrate profile tab parameters above to initiate operational authentication.`;
+            } else {
+                msg.className = "text-center text-xs font-medium text-red-400 mt-2";
+                msg.innerText = data.error;
+            }
+        }
+
+        async function login() {
+            const account_number = document.getElementById('login-acc').value;
+            const pin = document.getElementById('login-pin').value;
+            const msg = document.getElementById('auth-message');
+            const data = await apiCall('/api/login', { account_number, pin });
+            
+            if(data.success) {
+                renderDashboard(data.user, account_number);
+            } else {
+                msg.className = "text-center text-xs font-medium text-red-400 mt-2";
+                msg.innerText = data.error;
+            }
+        }
+
+        function renderDashboard(user, accNum) {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('user-name').innerText = user.name.toUpperCase();
+            document.getElementById('user-acc').innerText = `Routing Assignment ID: ${accNum}`;
+            document.getElementById('bal-liquid').innerText = `$${user.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('bal-bonds').innerText = `$${user.fd_balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            const bondTerm = document.getElementById('bond-term');
+            if(user.fd_balance > 0) {
+                bondTerm.innerText = `Horizon Allocation Remaining: ${user.fd_years_left} cycles [Locked at 6.00% APR]`;
+                bondTerm.classList.remove('hidden');
+            } else {
+                bondTerm.classList.add('hidden');
+            }
+        }
+
+        async function executeTx(action) {
+            const amount = document.getElementById('dash-amount').value;
+            const years = document.getElementById('bond-years').value;
+            const log = document.getElementById('log-box');
+            
+            const data = await apiCall('/api/transaction', { action, amount, years });
+            if(data.success) {
+                renderDashboard(data.user, document.getElementById('user-acc').innerText.split(': ')[1]);
+                log.classList.remove('hidden');
+                log.className = "p-4 bg-[#111827] text-emerald-400 border border-emerald-950/50 text-xs text-center font-mono";
+                log.innerText = `SYSTEM STATUS // ASSET TRANSACTION EXECUTED // ACTION TYPE: ${action.toUpperCase()}`;
+                document.getElementById('dash-amount').value = '';
+            } else {
+                alert(`Operational Rejection: ${data.error}`);
+            }
+        }
+
+        async function runTimeMachine() {
+            const years = document.getElementById('time-years').value;
+            const log = document.getElementById('log-box');
+            const data = await apiCall('/api/timemachine', { years });
+            
+            if(data.success) {
+                renderDashboard(data.user, document.getElementById('user-acc').innerText.split(': ')[1]);
+                log.classList.remove('hidden');
+                if(data.receipt.matured) {
+                    log.className = "p-4 bg-[#1c1917] text-amber-200 border border-amber-900/40 text-xs space-y-1 font-mono";
+                    log.innerHTML = `<span class="text-amber-400 font-bold">LEDGER NOTIFICATION // YIELD MATURITY DETECTED</span><br>Initial Principal Asset: ${data.receipt.principal}<br>Accumulated Yield Growth: ${data.receipt.interest}<br>Aggregated Asset Settlement Payout: ${data.receipt.total}`;
+                } else {
+                    log.className = "p-4 bg-[#111827] text-slate-400 border border-slate-800 text-xs text-center font-mono";
+                    log.innerText = `SYSTEM NOTICE // ${data.receipt.msg.toUpperCase()}`;
+                }
+            } else {
+                alert(`Operational Rejection: ${data.error}`);
+            }
+        }
+
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('login-acc').value = '';
+            document.getElementById('login-pin').value = '';
+            document.getElementById('auth-message').innerText = '';
+            document.getElementById('log-box').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
