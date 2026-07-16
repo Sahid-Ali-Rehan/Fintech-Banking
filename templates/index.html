@@ -3,120 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.P. Morgan Chase & Co. Core Terminal</title>
+    <title>J.P. Morgan Chase & Co. Prestige Ledger</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
-        .serif-title { font-family: 'Cinzel', serif; letter-spacing: 0.07em; }
-        .sans-ui { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        .serif-title { font-family: 'Cinzel', serif; }
+        .serif-sub { font-family: 'Playfair Display', serif; }
+        .sans-ui { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Next-Gen Glassmorphic UI & Luxury Gradients */
+        .glass-card {
+            background: rgba(13, 13, 13, 0.7);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .gold-glow-border {
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gold-glow-border:hover, .gold-glow-border:focus-within {
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .gold-btn {
+            background: linear-gradient(135deg, #f3e7c4 0%, #d4af37 50%, #aa7c11 100%);
+            color: #000000;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.15);
+        }
+        .gold-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.15);
+        }
+
+        .glow-gold-text {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        .glow-red-text {
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .receipt-card {
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+            border: 1px dashed rgba(212, 175, 55, 0.35);
+        }
+
+        /* Ambient Orbs */
+        .glow-orb-1 {
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+        .glow-orb-2 {
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.04) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 10, 10, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.4);
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.8);
+        }
     </style>
 </head>
-<body class="bg-[#111827] sans-ui text-slate-200 min-h-screen flex flex-col items-center justify-center p-6">
+<body class="bg-[#030303] sans-ui text-neutral-100 min-h-screen flex flex-col items-center justify-center p-4 md:p-12 relative overflow-x-hidden selection:bg-[#d4af37] selection:text-black">
 
-    <div class="w-full max-w-xl bg-[#1f2937] border border-slate-700 shadow-2xl p-8 space-y-8">
+    <!-- Premium Background Ambient Lighting Dynamics -->
+    <div class="fixed top-[-20%] left-[-10%] w-[60vw] h-[60vw] glow-orb-1 rounded-full pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] glow-orb-2 rounded-full pointer-events-none z-0"></div>
+
+    <div class="w-full max-w-3xl glass-card relative z-10 rounded-3xl p-6 md:p-12 shadow-[0_0_80px_rgba(0,0,0,0.8)] border border-neutral-800/60">
         
         <!-- Corporate Identity Header -->
-        <div class="text-center border-b border-slate-700 pb-6">
-            <h1 class="serif-title text-2xl font-semibold text-amber-100 tracking-wider uppercase">J.P. Morgan Chase & Co.</h1>
-            <p class="text-xs tracking-widest text-slate-400 font-light mt-1 uppercase">Institutional Client Banking Portal</p>
+        <div class="text-center border-b border-neutral-900 pb-8 mb-8 relative">
+            <h1 class="serif-title text-4xl md:text-5xl font-black tracking-[0.2em] bg-gradient-to-b from-amber-100 via-amber-300 to-yellow-600 bg-clip-text text-transparent glow-gold-text">
+                J.P. MORGAN
+            </h1>
+            <p class="text-[10px] tracking-[0.4em] text-amber-200/60 font-semibold mt-3 uppercase">Prestige Private Wealth Client Core</p>
         </div>
 
         <!-- Authentication Module Interface -->
-        <div id="auth-section" class="space-y-6">
-            <div class="flex bg-[#111827] p-1 border border-slate-700">
-                <button onclick="switchAuthTab('login')" id="tab-login" class="w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase bg-[#1f2937] text-amber-100 border border-slate-700">Access Terminal</button>
-                <button onclick="switchAuthTab('register')" id="tab-register" class="w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-slate-200">Establish Registry</button>
+        <div id="auth-section" class="space-y-8">
+            <div class="flex bg-neutral-950 p-1.5 border border-neutral-800/80 rounded-xl">
+                <button onclick="switchAuthTab('login')" id="tab-login" class="w-1/2 py-3.5 text-center text-xs font-bold tracking-widest uppercase bg-[#121212] text-amber-300 border border-amber-500/20 rounded-lg transition-all duration-300">
+                    Access System
+                </button>
+                <button onclick="switchAuthTab('register')" id="tab-register" class="w-1/2 py-3.5 text-center text-xs font-bold tracking-widest uppercase text-neutral-400 hover:text-neutral-200 transition-all duration-300">
+                    Establish Identity
+                </button>
             </div>
 
-            <!-- Login Container Form -->
-            <div id="form-login" class="space-y-4">
-                <div>
-                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Account Identifier</label>
-                    <input id="login-acc" type="text" placeholder="10-Digit Routing Assignment" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+            <!-- Login Form -->
+            <div id="form-login" class="space-y-6">
+                <div class="space-y-2">
+                    <label class="block text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Account Identifier</label>
+                    <input id="login-acc" type="text" placeholder="10-Digit Routing Token" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-amber-500/40 rounded-xl p-4 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none transition-all font-mono tracking-widest">
                 </div>
-                <div>
-                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Security Access PIN</label>
-                    <input id="login-pin" type="password" placeholder="4-Digit Secure Configuration" maxlength="4" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+                <div class="space-y-2">
+                    <label class="block text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Security Access PIN</label>
+                    <input id="login-pin" type="password" placeholder="4-Digit PIN Security Key" maxlength="4" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-amber-500/40 rounded-xl p-4 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none transition-all font-mono tracking-widest">
                 </div>
-                <button onclick="login()" class="w-full bg-slate-100 text-slate-900 py-3 text-xs font-bold uppercase tracking-widest hover:bg-slate-200 transition">Authorize Session</button>
+                <button onclick="login()" class="w-full gold-btn py-4 text-xs font-black uppercase tracking-widest rounded-xl mt-4">
+                    Authorize Secure Session
+                </button>
             </div>
 
-            <!-- Register Container Form -->
-            <div id="form-register" class="space-y-4 hidden">
-                <div>
-                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Legal Entity / Full Corporate Name</label>
-                    <input id="reg-name" type="text" placeholder="Client Assignment Signature" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500">
+            <!-- Register Form (Perfectly hidden initially) -->
+            <div id="form-register" class="space-y-6 hidden">
+                <div class="space-y-2">
+                    <label class="block text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Legal Signature / Corporate Name</label>
+                    <input id="reg-name" type="text" placeholder="Authorized Client Signature" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-amber-500/40 rounded-xl p-4 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none transition-all">
                 </div>
-                <div>
-                    <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1.5 font-medium">Define Access PIN</label>
-                    <input id="reg-pin" type="password" placeholder="Construct 4-Digit Identity Token" maxlength="4" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+                <div class="space-y-2">
+                    <label class="block text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Define PIN Token</label>
+                    <input id="reg-pin" type="password" placeholder="Define 4-Digit Identity Token" maxlength="4" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-amber-500/40 rounded-xl p-4 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none transition-all font-mono tracking-widest">
                 </div>
-                <button onclick="register()" class="w-full bg-slate-100 text-slate-900 py-3 text-xs font-bold uppercase tracking-widest hover:bg-slate-200 transition">Generate Ledger Allocation</button>
+                <button onclick="register()" class="w-full gold-btn py-4 text-xs font-black uppercase tracking-widest rounded-xl mt-4">
+                    Initialize Sovereign Allocation
+                </button>
             </div>
             <div id="auth-message" class="text-center text-xs tracking-wide"></div>
         </div>
 
         <!-- Authorized Client Terminal Dashboard -->
-        <div id="dashboard-section" class="space-y-8 hidden">
-            <div class="flex justify-between items-center bg-[#111827] border border-slate-700 p-4">
+        <div id="dashboard-section" class="space-y-10 hidden">
+            
+            <!-- Client Header Meta -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-neutral-950/90 border border-neutral-850 p-6 rounded-2xl gap-4">
                 <div>
-                    <h3 id="user-name" class="text-xs font-bold tracking-wider text-amber-100 uppercase">Client</h3>
-                    <p id="user-acc" class="text-[10px] font-mono tracking-widest text-slate-400 uppercase mt-0.5">Acc: 0000000000</p>
+                    <h3 id="user-name" class="text-sm font-extrabold tracking-widest text-amber-300 uppercase glow-gold-text">CLIENT NAME</h3>
+                    <p id="user-acc" class="text-[9px] font-mono tracking-[0.2em] text-neutral-500 uppercase mt-1">ID: 0000000000</p>
                 </div>
-                <button onclick="logout()" class="text-[10px] font-bold tracking-wider uppercase border border-slate-700 text-slate-400 px-3 py-1.5 hover:text-slate-200 hover:border-slate-500 transition">Terminate Session</button>
+                <button onclick="logout()" class="text-[9px] font-extrabold tracking-widest uppercase border border-neutral-800 hover:border-red-500/40 hover:text-red-400 text-neutral-400 px-5 py-2.5 transition rounded-xl bg-neutral-900/50">
+                    Terminate Session
+                </button>
             </div>
 
-            <!-- Liquidity Ledger Positions -->
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-[#111827] border border-slate-700 p-5">
-                    <span class="text-[10px] text-slate-400 tracking-widest font-semibold uppercase block border-b border-slate-800 pb-2">Available Liquid Funds</span>
-                    <h2 id="bal-liquid" class="text-2xl font-semibold font-mono text-slate-100 mt-3">$0.00</h2>
+            <!-- Balances Panel -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Liquid Funds -->
+                <div class="bg-neutral-950/60 border border-neutral-850 hover:border-neutral-700/60 p-6 rounded-2xl transition duration-300 shadow-lg">
+                    <span class="text-[9px] text-neutral-400 tracking-widest font-bold uppercase block border-b border-neutral-900 pb-2.5">Liquid Collateral</span>
+                    <h2 id="bal-liquid" class="text-2xl font-bold font-mono text-neutral-100 mt-4 glow-gold-text">$0.00</h2>
                 </div>
-                <div class="bg-[#111827] border border-slate-700 p-5">
-                    <span class="text-[10px] text-slate-400 tracking-widest font-semibold uppercase block border-b border-slate-800 pb-2">Fixed Term Fixed Yield</span>
-                    <h2 id="bal-bonds" class="text-2xl font-semibold font-mono text-amber-100 mt-3">$0.00</h2>
-                    <p id="bond-term" class="text-[9px] text-slate-400 tracking-wider mt-2 hidden uppercase font-mono"></p>
+                <!-- FD Balance -->
+                <div class="bg-neutral-950/60 border border-neutral-850 hover:border-neutral-700/60 p-6 rounded-2xl transition duration-300 shadow-lg">
+                    <span class="text-[9px] text-neutral-400 tracking-widest font-bold uppercase block border-b border-neutral-900 pb-2.5">Fixed Term Asset</span>
+                    <h2 id="bal-bonds" class="text-2xl font-bold font-mono text-amber-300 mt-4 glow-gold-text">$0.00</h2>
+                    <p id="bond-term" class="text-[8px] text-amber-400/80 tracking-wider mt-2.5 hidden uppercase font-mono bg-amber-500/10 py-1 px-2 rounded border border-amber-500/20"></p>
+                </div>
+                <!-- Outstanding Loan Balance -->
+                <div class="bg-neutral-950/60 border border-neutral-850 hover:border-red-950/30 p-6 rounded-2xl transition duration-300 shadow-lg">
+                    <span class="text-[9px] text-red-400/80 tracking-widest font-bold uppercase block border-b border-neutral-900 pb-2.5">Liability / Debt</span>
+                    <h2 id="bal-loan" class="text-2xl font-bold font-mono text-red-500 mt-4 glow-red-text">$0.00</h2>
+                    <p id="loan-detail" class="text-[8px] text-red-400/80 tracking-wider mt-2.5 hidden uppercase font-mono bg-red-500/10 py-1 px-2 rounded border border-red-500/20">Interest Rate: 7.00% APR</p>
                 </div>
             </div>
 
-            <!-- Transaction and Resource Matrix -->
-            <div class="space-y-4 border-t border-slate-700 pt-6">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Capital Ledger Actions</h4>
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="col-span-2 relative">
-                        <input id="dash-amount" type="number" placeholder="Value Denomination (USD)" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono">
+            <!-- FEATURE TAB NAVIGATION SYSTEM -->
+            <div class="border-b border-neutral-850">
+                <nav class="flex flex-wrap gap-2 pb-3" aria-label="Tabs">
+                    <button onclick="switchFeatureTab('manual')" id="tab-feat-manual" class="px-4 py-2 text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 rounded-xl border border-amber-500/30 transition-all">
+                        Manual
+                    </button>
+                    <button onclick="switchFeatureTab('transfer')" id="tab-feat-transfer" class="px-4 py-2 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 hover:text-neutral-200 rounded-xl border border-transparent transition-all hover:bg-neutral-900/50">
+                        Ledger
+                    </button>
+                    <button onclick="switchFeatureTab('fd')" id="tab-feat-fd" class="px-4 py-2 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 hover:text-neutral-200 rounded-xl border border-transparent transition-all hover:bg-neutral-900/50">
+                        Fixed Deposits
+                    </button>
+                    <button onclick="switchFeatureTab('loans')" id="tab-feat-loans" class="px-4 py-2 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 hover:text-neutral-200 rounded-xl border border-transparent transition-all hover:bg-neutral-900/50">
+                        Loans
+                    </button>
+                    <button onclick="switchFeatureTab('chrono')" id="tab-feat-chrono" class="px-4 py-2 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 hover:text-neutral-200 rounded-xl border border-transparent transition-all hover:bg-neutral-900/50">
+                        Chrono-Engine
+                    </button>
+                </nav>
+            </div>
+
+            <!-- TAB CONTENT SECTIONS -->
+            <div class="space-y-6">
+                
+                <!-- TAB: USER MANUAL -->
+                <div id="content-feat-manual" class="bg-neutral-950/60 border border-neutral-850 p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-2 border-b border-neutral-900 pb-3">
+                        <span class="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
+                        <h4 class="text-xs font-extrabold uppercase tracking-widest text-amber-300">Client Operations Handbook</h4>
                     </div>
-                    <button onclick="executeTx('deposit')" class="bg-slate-200 text-slate-900 text-xs font-bold uppercase tracking-wider hover:bg-slate-300 transition">Credit Ledger</button>
-                    
-                    <div class="col-span-2">
-                        <select id="bond-years" class="w-full bg-[#111827] border border-slate-700 p-3 text-sm text-slate-300 focus:outline-none focus:border-slate-500 uppercase text-xs tracking-wider font-medium">
-                            <option value="1">12-Month Structural Horizon</option>
-                            <option value="3">36-Month Structural Horizon</option>
-                            <option value="5">60-Month Structural Horizon</option>
-                        </select>
+                    <div class="text-[11px] text-neutral-400 leading-relaxed space-y-4 font-mono">
+                        <div class="bg-neutral-900/40 p-3 rounded-lg border border-neutral-800/40">
+                            <strong class="text-neutral-200 uppercase tracking-wider block mb-1">1. Liquid Ledger:</strong> Credit increases liquid collateral instantly. Debit withdraws money. Every single operation is saved dynamically in the database ledger.
+                        </div>
+                        <div class="bg-neutral-900/40 p-3 rounded-lg border border-neutral-800/40">
+                            <strong class="text-neutral-200 uppercase tracking-wider block mb-1">2. Fixed Horizon (FD):</strong> Lock a portion of your liquid balance for <span class="text-amber-400 font-bold">N years</span> at a guaranteed compounding yield of <span class="text-amber-400 font-bold">6% APR</span>. Funds are locked securely until maturity.
+                        </div>
+                        <div class="bg-neutral-900/40 p-3 rounded-lg border border-neutral-800/40">
+                            <strong class="text-neutral-200 uppercase tracking-wider block mb-1">3. Credit Facility (Loans):</strong> Instantly draw down additional capital into your Liquid Balance. Outstanding loans accrue compounding interest at <span class="text-red-400 font-bold">7% APR</span>. Use the "Repay Debt" utility to clear your liability dynamically.
+                        </div>
+                        <div class="bg-neutral-900/40 p-3 rounded-lg border border-neutral-800/40">
+                            <strong class="text-neutral-200 uppercase tracking-wider block mb-1">4. Chrono-Engine:</strong> Simulate time leaps. Skipping <span class="text-amber-400 font-bold">N years</span> compounds your investments and returns them to your Liquid balance, while compounding any outstanding debt.
+                        </div>
                     </div>
-                    <button onclick="executeTx('withdraw')" class="border border-slate-700 text-slate-300 text-xs font-bold uppercase tracking-wider hover:text-slate-100 hover:border-slate-500 transition">Debit Ledger</button>
-                    
-                    <div class="col-span-2"></div>
-                    <button onclick="executeTx('invest')" class="bg-amber-950 text-amber-200 border border-amber-800 text-xs font-bold uppercase tracking-wider hover:bg-amber-900 transition py-3">Lock Asset Structural</button>
+                </div>
+
+                <!-- TAB: TRANSFER LEDGER (Credit/Debit) -->
+                <div id="content-feat-transfer" class="hidden bg-neutral-950/60 border border-neutral-850 p-6 rounded-2xl space-y-4">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-amber-300 block border-b border-neutral-900 pb-2">Standard Ledger Transfers</span>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input id="dash-amount" type="number" placeholder="Enter Amount (USD)" class="w-full sm:w-2/3 bg-neutral-950 border border-neutral-800 focus:border-amber-500/40 p-4 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none rounded-xl font-mono">
+                        <div class="flex gap-2 w-full sm:w-1/3">
+                            <button onclick="executeTx('deposit')" class="w-1/2 bg-neutral-100 text-neutral-900 text-xs font-black uppercase hover:bg-neutral-200 transition rounded-xl py-4">Credit</button>
+                            <button onclick="executeTx('withdraw')" class="w-1/2 border border-neutral-800 text-neutral-300 text-xs font-black uppercase hover:text-red-400 hover:border-red-500/30 transition rounded-xl py-4 bg-neutral-900/30">Debit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: FIXED DEPOSITS -->
+                <div id="content-feat-fd" class="hidden bg-neutral-950/60 border border-neutral-850 p-6 rounded-2xl space-y-4">
+                    <div class="flex flex-col space-y-1">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-amber-300">Create Fixed Horizon Asset</span>
+                        <p class="text-[9px] text-neutral-500 font-mono">Locks capital out of your Liquid balance at 6.00% compounding interest.</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row gap-3">
+                        <input id="fd-amount" type="number" placeholder="Lock Amount (USD)" class="w-full md:w-1/3 bg-neutral-950 border border-neutral-800 focus:border-amber-500/40 p-4 text-xs text-neutral-200 font-mono rounded-xl focus:outline-none">
+                        <input id="bond-custom-years" type="number" min="1" placeholder="Horizon Years" class="w-full md:w-1/3 bg-neutral-950 border border-neutral-800 focus:border-amber-500/40 p-4 text-xs text-neutral-200 font-mono rounded-xl focus:outline-none">
+                        <button onclick="executeFD()" class="w-full md:w-1/3 gold-btn text-[10px] font-black uppercase tracking-widest rounded-xl py-4">Establish Lock</button>
+                    </div>
+                </div>
+
+                <!-- TAB: CREDIT & DEBT (LOANS) -->
+                <div id="content-feat-loans" class="hidden bg-neutral-950/60 border border-neutral-850 p-6 rounded-2xl space-y-4">
+                    <div class="flex flex-col space-y-1">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-red-400">Credit Drawdown & Liability Payback</span>
+                        <p class="text-[9px] text-neutral-500 font-mono">Loans compound at 7.00% APR. Repayments are directly debited from Liquid Balance.</p>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <input id="loan-request-amount" type="number" min="1" placeholder="Valuation Amount (USD)" class="w-full bg-neutral-950 border border-neutral-800 focus:border-amber-500/40 p-4 text-xs text-neutral-200 font-mono rounded-xl focus:outline-none">
+                        <div class="flex gap-3">
+                            <button onclick="acquireLoan()" class="w-1/2 bg-neutral-900 text-neutral-300 border border-neutral-800 hover:text-neutral-100 text-xs font-black uppercase hover:border-red-500/30 transition rounded-xl py-4 bg-neutral-950">Draw Capital</button>
+                            <button onclick="repayLoan()" class="w-1/2 bg-emerald-950/40 text-emerald-300 border border-emerald-900/40 text-xs font-black uppercase hover:bg-emerald-900 transition rounded-xl py-4">Repay Debt</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: CHRONO-ENGINE -->
+                <div id="content-feat-chrono" class="hidden bg-neutral-950/60 border border-neutral-850 p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                        <h4 class="text-xs font-extrabold uppercase tracking-wider text-neutral-300">Sovereign Chrono-Simulation Engine</h4>
+                    </div>
+                    <div class="flex gap-3">
+                        <input id="time-years" type="number" value="1" min="1" class="w-1/2 bg-[#0a0a0a] border border-neutral-800 focus:border-amber-500/40 p-4 text-sm text-neutral-100 font-mono focus:outline-none rounded-xl">
+                        <button onclick="runTimeMachine()" class="w-1/2 bg-neutral-900 hover:bg-neutral-850 text-amber-300 text-xs font-black uppercase tracking-widest border border-amber-500/20 hover:border-amber-500/50 transition rounded-xl">
+                            Execute Chrono-Skip
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Premium Interactive Dynamic Receipt Station -->
+            <div id="receipt-station" class="hidden space-y-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Transaction Record Issued</span>
+                    <button onclick="hideReceipt()" class="text-[9px] font-bold text-neutral-500 hover:text-neutral-300 uppercase">Dismiss</button>
+                </div>
+                <div id="receipt-payload" class="receipt-card p-6 rounded-2xl font-mono text-xs space-y-4 shadow-xl"></div>
+            </div>
+
+            <!-- Ledger Activity History Log -->
+            <div class="space-y-4 border-t border-neutral-900 pt-8">
+                <div class="flex justify-between items-center">
+                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-amber-300/80 tracking-[0.15em]">Sovereign Activity History Ledger</h4>
+                    <button onclick="fetchHistory()" class="text-[9px] uppercase tracking-widest text-neutral-500 hover:text-amber-300 transition font-extrabold">Refresh Logs</button>
+                </div>
+                
+                <div class="bg-neutral-950 border border-neutral-850 rounded-2xl overflow-hidden shadow-inner">
+                    <div class="max-h-60 overflow-y-auto" id="history-container">
+                        <table class="w-full text-left text-[11px] font-mono">
+                            <thead>
+                                <tr class="bg-neutral-900/60 text-neutral-500 text-[9px] uppercase tracking-widest border-b border-neutral-850">
+                                    <th class="p-4">Reference / Date</th>
+                                    <th class="p-4">Description</th>
+                                    <th class="p-4 text-right">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-rows" class="divide-y divide-neutral-900">
+                                <!-- Dynamic logs loaded here -->
+                            </tbody>
+                        </table>
+                        <div id="history-empty" class="p-10 text-center text-neutral-600 text-xs uppercase hidden">
+                            No active records identified within this ledger sequence.
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Time Progression Simulation Block -->
-            <div class="bg-[#111827] border border-slate-700 p-5 space-y-3">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Yield Engine Time Projection Simulator</h4>
-                <div class="flex gap-3">
-                    <input id="time-years" type="number" value="1" min="1" class="w-1/2 bg-[#1f2937] border border-slate-700 p-3 text-sm text-slate-100 font-mono focus:outline-none">
-                    <button onclick="runTimeMachine()" class="w-1/2 bg-slate-800 text-slate-200 text-xs font-bold uppercase tracking-widest border border-slate-600 hover:bg-slate-700 transition">Execute Forward Projection</button>
-                </div>
-            </div>
-
-            <!-- Terminal Output System Log -->
-            <div id="log-box" class="hidden p-4 bg-[#111827] border border-slate-800 text-xs font-mono rounded"></div>
         </div>
     </div>
 
-    <!-- Frontend Architecture Logic Systems -->
+    <!-- Script Terminal Architecture Logics -->
     <script>
         let currentAuthTab = 'login';
         
@@ -125,12 +322,29 @@
             document.getElementById('form-login').classList.toggle('hidden', tab !== 'login');
             document.getElementById('form-register').classList.toggle('hidden', tab !== 'register');
             
-            const activeClass = 'w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase bg-[#1f2937] text-amber-100 border border-slate-700';
-            const inactiveClass = 'w-1/2 py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-slate-200';
+            const activeClass = 'w-1/2 py-3.5 text-center text-xs font-bold tracking-widest uppercase bg-[#121212] text-amber-300 border border-amber-500/20 rounded-lg transition-all duration-300';
+            const inactiveClass = 'w-1/2 py-3.5 text-center text-xs font-bold tracking-widest uppercase text-neutral-400 hover:text-neutral-200 transition-all duration-300';
             
             document.getElementById('tab-login').className = tab === 'login' ? activeClass : inactiveClass;
             document.getElementById('tab-register').className = tab === 'register' ? activeClass : inactiveClass;
             document.getElementById('auth-message').innerText = '';
+        }
+
+        // Tab Switch Logic for Features
+        function switchFeatureTab(tabId) {
+            const tabs = ['manual', 'transfer', 'fd', 'loans', 'chrono'];
+            tabs.forEach(t => {
+                const content = document.getElementById(`content-feat-${t}`);
+                const btn = document.getElementById(`tab-feat-${t}`);
+                
+                if (t === tabId) {
+                    content.classList.remove('hidden');
+                    btn.className = "px-4 py-2 text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 rounded-xl border border-amber-500/30 transition-all";
+                } else {
+                    content.classList.add('hidden');
+                    btn.className = "px-4 py-2 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 hover:text-neutral-200 rounded-xl border border-transparent transition-all hover:bg-neutral-900/50";
+                }
+            });
         }
 
         async function apiCall(url, body) {
@@ -142,8 +356,8 @@
                 });
                 return await res.json();
             } catch (error) {
-                console.error("Transmission breakdown:", error);
-                return { success: false, error: "System framework communication infrastructure fault." };
+                console.error("Link broken:", error);
+                return { success: false, error: "System infrastructure terminal fault." };
             }
         }
 
@@ -154,10 +368,10 @@
             const data = await apiCall('/api/register', { name, pin });
             
             if(data.success) {
-                msg.className = "text-center text-xs font-medium text-emerald-400 mt-2";
-                msg.innerHTML = `Ledger allocated. Registry Assignment ID:<br><strong class="text-base text-slate-100 font-mono tracking-widest block my-1">${data.account_number}</strong>Migrate profile tab parameters above to initiate operational authentication.`;
+                msg.className = "text-center text-xs font-medium text-emerald-400 mt-4";
+                msg.innerHTML = `Ledger Allocation Successful. Identity Key:<br><strong class="text-base text-neutral-100 font-mono tracking-widest block my-2">${data.account_number}</strong>Migrate profile tab parameters above to initiate authorization.`;
             } else {
-                msg.className = "text-center text-xs font-medium text-red-400 mt-2";
+                msg.className = "text-center text-xs font-medium text-red-400 mt-4";
                 msg.innerText = data.error;
             }
         }
@@ -170,8 +384,9 @@
             
             if(data.success) {
                 renderDashboard(data.user, account_number);
+                fetchHistory();
             } else {
-                msg.className = "text-center text-xs font-medium text-red-400 mt-2";
+                msg.className = "text-center text-xs font-medium text-red-400 mt-4";
                 msg.innerText = data.error;
             }
         }
@@ -180,31 +395,76 @@
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
             document.getElementById('user-name').innerText = user.name.toUpperCase();
-            document.getElementById('user-acc').innerText = `Routing Assignment ID: ${accNum}`;
+            document.getElementById('user-acc').innerText = `ID Token: ${accNum}`;
             document.getElementById('bal-liquid').innerText = `$${user.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
             document.getElementById('bal-bonds').innerText = `$${user.fd_balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('bal-loan').innerText = `$${user.loan_balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
             
             const bondTerm = document.getElementById('bond-term');
             if(user.fd_balance > 0) {
-                bondTerm.innerText = `Horizon Allocation Remaining: ${user.fd_years_left} cycles [Locked at 6.00% APR]`;
+                bondTerm.innerText = `Horizon Period Left: ${user.fd_years_left} Years [Locked @ ${(user.fd_rate*100).toFixed(2)}%]`;
                 bondTerm.classList.remove('hidden');
             } else {
                 bondTerm.classList.add('hidden');
+            }
+
+            const loanDetail = document.getElementById('loan-detail');
+            if(user.loan_balance > 0) {
+                loanDetail.classList.remove('hidden');
+            } else {
+                loanDetail.classList.add('hidden');
             }
         }
 
         async function executeTx(action) {
             const amount = document.getElementById('dash-amount').value;
-            const years = document.getElementById('bond-years').value;
-            const log = document.getElementById('log-box');
-            
-            const data = await apiCall('/api/transaction', { action, amount, years });
+            const data = await apiCall('/api/transaction', { action, amount });
             if(data.success) {
                 renderDashboard(data.user, document.getElementById('user-acc').innerText.split(': ')[1]);
-                log.classList.remove('hidden');
-                log.className = "p-4 bg-[#111827] text-emerald-400 border border-emerald-950/50 text-xs text-center font-mono";
-                log.innerText = `SYSTEM STATUS // ASSET TRANSACTION EXECUTED // ACTION TYPE: ${action.toUpperCase()}`;
+                displayReceipt(data.receipt);
+                fetchHistory();
                 document.getElementById('dash-amount').value = '';
+            } else {
+                alert(`Operational Rejection: ${data.error}`);
+            }
+        }
+
+        async function executeFD() {
+            const amount = document.getElementById('fd-amount').value;
+            const years = document.getElementById('bond-custom-years').value;
+            const data = await apiCall('/api/transaction', { action: 'invest', amount, years });
+            if(data.success) {
+                renderDashboard(data.user, document.getElementById('user-acc').innerText.split(': ')[1]);
+                displayReceipt(data.receipt);
+                fetchHistory();
+                document.getElementById('fd-amount').value = '';
+                document.getElementById('bond-custom-years').value = '';
+            } else {
+                alert(`Operational Rejection: ${data.error}`);
+            }
+        }
+
+        async function acquireLoan() {
+            const amount = document.getElementById('loan-request-amount').value;
+            const data = await apiCall('/api/loan', { amount });
+            if(data.success) {
+                renderDashboard(data.user, document.getElementById('user-acc').innerText.split(': ')[1]);
+                displayReceipt(data.receipt);
+                fetchHistory();
+                document.getElementById('loan-request-amount').value = '';
+            } else {
+                alert(`Operational Rejection: ${data.error}`);
+            }
+        }
+
+        async function repayLoan() {
+            const amount = document.getElementById('loan-request-amount').value;
+            const data = await apiCall('/api/repay', { amount });
+            if(data.success) {
+                renderDashboard(data.user, document.getElementById('user-acc').innerText.split(': ')[1]);
+                displayReceipt(data.receipt);
+                fetchHistory();
+                document.getElementById('loan-request-amount').value = '';
             } else {
                 alert(`Operational Rejection: ${data.error}`);
             }
@@ -212,22 +472,83 @@
 
         async function runTimeMachine() {
             const years = document.getElementById('time-years').value;
-            const log = document.getElementById('log-box');
             const data = await apiCall('/api/timemachine', { years });
             
             if(data.success) {
                 renderDashboard(data.user, document.getElementById('user-acc').innerText.split(': ')[1]);
-                log.classList.remove('hidden');
-                if(data.receipt.matured) {
-                    log.className = "p-4 bg-[#1c1917] text-amber-200 border border-amber-900/40 text-xs space-y-1 font-mono";
-                    log.innerHTML = `<span class="text-amber-400 font-bold">LEDGER NOTIFICATION // YIELD MATURITY DETECTED</span><br>Initial Principal Asset: ${data.receipt.principal}<br>Accumulated Yield Growth: ${data.receipt.interest}<br>Aggregated Asset Settlement Payout: ${data.receipt.total}`;
-                } else {
-                    log.className = "p-4 bg-[#111827] text-slate-400 border border-slate-800 text-xs text-center font-mono";
-                    log.innerText = `SYSTEM NOTICE // ${data.receipt.msg.toUpperCase()}`;
-                }
+                displayReceipt(data.receipt);
+                fetchHistory();
             } else {
                 alert(`Operational Rejection: ${data.error}`);
             }
+        }
+
+        async function fetchHistory() {
+            try {
+                const res = await fetch('/api/history');
+                const data = await res.json();
+                const tbody = document.getElementById('history-rows');
+                const empty = document.getElementById('history-empty');
+                tbody.innerHTML = '';
+                
+                if(data.success && data.history.length > 0) {
+                    empty.classList.add('hidden');
+                    data.history.forEach(tx => {
+                        const amountColor = tx.amount_value >= 0 ? 'text-emerald-400' : 'text-red-400';
+                        const prefix = tx.amount_value >= 0 ? '+' : '';
+                        
+                        tbody.innerHTML += `
+                        <tr class="hover:bg-neutral-900/50 transition">
+                            <td class="p-4">
+                                <div class="text-neutral-300 font-bold">${tx.reference_id}</div>
+                                <div class="text-[9px] text-neutral-600 mt-0.5">${tx.timestamp}</div>
+                            </td>
+                            <td class="p-4 uppercase text-neutral-400 tracking-wide">${tx.description}</td>
+                            <td class="p-4 text-right font-bold ${amountColor}">${prefix}${tx.amount}</td>
+                        </tr>
+                        `;
+                    });
+                } else {
+                    empty.classList.remove('hidden');
+                }
+            } catch (err) {
+                console.error("Failed to fetch history logs", err);
+            }
+        }
+
+        function displayReceipt(receipt) {
+            if (!receipt) return;
+            const container = document.getElementById('receipt-station');
+            const payload = document.getElementById('receipt-payload');
+            container.classList.remove('hidden');
+            
+            let itemsHtml = '';
+            for (const [key, val] of Object.entries(receipt.meta || {})) {
+                itemsHtml += `
+                <div class="flex justify-between border-b border-neutral-900 pb-2">
+                    <span class="text-neutral-500 uppercase tracking-wider text-[9px]">${key.replace(/_/g, ' ')}</span>
+                    <span class="text-neutral-200 font-semibold">${val}</span>
+                </div>`;
+            }
+
+            payload.innerHTML = `
+                <div class="text-center border-b border-dashed border-neutral-800 pb-4">
+                    <div class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest">J.P. Morgan Private Ledger</div>
+                    <div class="text-[9px] text-neutral-500 uppercase mt-1">Transaction Ref: ${receipt.reference_id || 'N/A'}</div>
+                </div>
+                <div class="space-y-3 my-4">
+                    ${itemsHtml}
+                </div>
+                <div class="border-t border-dashed border-neutral-800 pt-4 flex justify-between items-center text-[11px]">
+                    <span class="text-amber-400 font-bold uppercase">LEDGER STATUS</span>
+                    <span class="text-emerald-400 font-mono font-bold uppercase">${receipt.status || 'COMPLETED'}</span>
+                </div>
+            `;
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideReceipt() {
+            document.getElementById('receipt-station').classList.add('hidden');
         }
 
         async function logout() {
@@ -237,7 +558,7 @@
             document.getElementById('login-acc').value = '';
             document.getElementById('login-pin').value = '';
             document.getElementById('auth-message').innerText = '';
-            document.getElementById('log-box').classList.add('hidden');
+            hideReceipt();
         }
     </script>
 </body>
