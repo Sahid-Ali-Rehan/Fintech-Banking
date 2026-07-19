@@ -6,14 +6,21 @@ from flask import Flask, render_template, request, jsonify, session
 from pymongo import MongoClient
 from dotenv import load_dotenv
 
+# 1. ALWAYS initialize dotenv first to load local or production secrets
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallback-secret-key")
 
+# 2. Grab the secret key from environment variables (with a local fallback)
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallback-secret-key-for-local-development")
+
+# 3. Retrieve MongoDB URI safely
 MONGO_URI = os.getenv("MONGO_URI")
 
 try:
+    if not MONGO_URI:
+        raise ValueError("MONGO_URI environment variable is missing!")
+        
     client = MongoClient(MONGO_URI)
     db = client["metro_bank"]
     accounts_collection = db["accounts"]
@@ -265,7 +272,6 @@ def repay_loan():
         return jsonify({"success": False, "error": "Insufficient liquid funds to complete payback."}), 400
 
     current_debt = user["loan_balance"]
-    # Determine actual payload to deduct (cannot repay more than actual outstanding debt)
     actual_repayment = min(amount, current_debt)
 
     accounts_collection.update_one(
@@ -324,13 +330,11 @@ def time_machine():
     fd_matured_this_session = False
 
     for _ in range(years_to_skip):
-        # Accrue interest on outstanding loans
         if loan_balance > 0:
             loan_interest = loan_balance * loan_rate
             loan_balance += loan_interest
             accumulated_loan_debt += loan_interest
 
-        # Accrue growth on FD assets
         if fd_balance > 0 and fd_years_left > 0:
             interest = fd_balance * fd_rate
             fd_balance += interest
@@ -357,7 +361,6 @@ def time_machine():
 
     ref_id = generate_receipt_ref()
     
-    # Save chronological transaction entries inside Database
     if accrued_fd_yield > 0:
         record_transaction(acc_num, ref_id, f"FD Accrued Interest (+{years_to_skip}y)", accrued_fd_yield)
     if accumulated_loan_debt > 0:
@@ -379,7 +382,7 @@ def time_machine():
 
     return jsonify({"success": True, "user": updated_user, "receipt": receipt})
 
+# 4. Local execution block (Used only when executing 'python app.py' on your computer)
 if __name__ == "__main__":
-    # Render sets a PORT environment variable automatically
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
